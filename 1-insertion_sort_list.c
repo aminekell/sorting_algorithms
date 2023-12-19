@@ -2,39 +2,25 @@
 #include "sort.h"
 
 void insertion_sort_list(listint_t **list) {
-	 listint_t *sorted = NULL, *current = *list;
+	 listint_t *current = (*list)->next;
     if (list == NULL || *list == NULL || (*list)->next == NULL)
         return;
 
+   
 
     while (current != NULL) {
-        listint_t *next = current->next;
+        listint_t *temp = current;
 
-        listint_t *temp_sorted = sorted;
-        listint_t *temp = NULL;
+        while (temp->prev != NULL && temp->n < temp->prev->n) {
+            int temp_val = temp->n;
+            temp->n = temp->prev->n;
+            temp->prev->n = temp_val;
 
-        while (temp_sorted != NULL && temp_sorted->n < current->n) {
-            temp = temp_sorted;
-            temp_sorted = temp_sorted->next;
+            temp = temp->prev;
         }
 
-        if (temp == NULL) {
-            current->prev = NULL;
-            current->next = sorted;
-            if (sorted != NULL)
-                sorted->prev = current;
-            sorted = current;
-        } else {
-            current->prev = temp;
-            current->next = temp->next;
-            if (temp->next != NULL)
-                temp->next->prev = current;
-            temp->next = current;
-        }
-
-        *list = sorted; 
-        print_list(*list);
-        current = next;
+        print_list(*list); 
+        current = current->next;
     }
 }
 
