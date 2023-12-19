@@ -26,3 +26,4 @@ for (i = 0; i < size - 1; i++)
 	print_array(array, size);
 	}
 }
+}
