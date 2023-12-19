@@ -1,29 +1,39 @@
 #include <stdio.h>
+#include "sort.h"
 
-/**
- * selection_sort - Sorts an array of integers in ascending order using Selection sort.
- * @array: The array to be sorted.
- * @size: The size of the array.
- */
-void selection_sort(int *array, size_t size) {
-    size_t i, j;
+void insertion_sort_list(listint_t **list) {
+	 listint_t *sorted = NULL, *current = *list;
+    if (list == NULL || *list == NULL || (*list)->next == NULL)
+        return;
 
-    for (i = 0; i < size - 1; i++) {
-        size_t min_index = i;
-        for (j = i + 1; j < size; j++) {
-            if (array[j] < array[min_index]) {
-                min_index = j;
-            }
+
+    while (current != NULL) {
+        listint_t *next = current->next;
+
+        listint_t *temp_sorted = sorted;
+        listint_t *temp = NULL;
+
+        while (temp_sorted != NULL && temp_sorted->n < current->n) {
+            temp = temp_sorted;
+            temp_sorted = temp_sorted->next;
         }
-        if (min_index != i) {
-            int temp = array[i];
-            array[i] = array[min_index];
-            array[min_index] = temp;
-            /* Print array after each swap */
-            for (j = 0; j < size - 1; j++) {
-                printf("%d, ", array[j]);
-            }
-            printf("%d\n", array[size - 1]);
+
+        if (temp == NULL) {
+            current->next = sorted;
+            if (sorted != NULL)
+                sorted->prev = current;
+            sorted = current;
+        } else {
+            temp->next = current;
+            current->prev = temp;
+            current->next = temp_sorted;
+            if (temp_sorted != NULL)
+                temp_sorted->prev = current;
         }
+
+        current = next;
     }
+
+    *list = sorted;
 }
+
