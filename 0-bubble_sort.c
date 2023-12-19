@@ -6,6 +6,7 @@
  * @array: The array to be sorted.
  * @size: The size of the array.
  */
+<<<<<<< HEAD
 
 void bubble_sort(int *array, size_t size)
 {
@@ -25,3 +26,21 @@ for (i = 0; i < size - 1; i++)
 	print_array(array, size);
 	}
 }
+=======
+void bubble_sort(int *array, size_t size) {
+    size_t i, j;
+    int temp;
+    
+    for (i = 0; i < size - 1; i++) {
+        for (j = 0; j < size - i - 1; j++) {
+            if (array[j] > array[j + 1]) {
+                temp = array[j];
+                array[j] = array[j + 1];
+                array[j + 1] = temp;
+                print_array(array, size);
+            }
+        }
+    }
+}
+
+>>>>>>> ed1d564b192d178d23182723c95ea0215922455b
