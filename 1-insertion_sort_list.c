@@ -1,38 +1,29 @@
-#include "sort.h"
+#include <stdio.h>
 
 /**
- * insertion_sort_list - Sorts a doubly linked list of integers in ascending order using
- * the Insertion sort algorithm.
- * @list: Pointer to a pointer to the head of the list.
+ * selection_sort - Sorts an array of integers in ascending order using Selection sort.
+ * @array: The array to be sorted.
+ * @size: The size of the array.
  */
-void insertion_sort_list(listint_t **list) {
-    if (list == NULL || *list == NULL || (*list)->next == NULL)
-        return;
+void selection_sort(int *array, size_t size) {
+    size_t i, j;
 
-    listint_t *current = (*list)->next;
-
-    while (current != NULL) {
-        listint_t *temp = current->next;
-
-        while (current->prev != NULL && current->n < current->prev->n) {
-            current->prev->next = current->next;
-
-            if (current->next != NULL)
-                current->next->prev = current->prev;
-
-            current->next = current->prev;
-            current->prev = current->prev->prev;
-            current->next->prev = current;
-
-            if (current->prev == NULL)
-                *list = current;
-            else
-                current->prev->next = current;
-
-            print_list(*list);
+    for (i = 0; i < size - 1; i++) {
+        size_t min_index = i;
+        for (j = i + 1; j < size; j++) {
+            if (array[j] < array[min_index]) {
+                min_index = j;
+            }
         }
-
-        current = temp;
+        if (min_index != i) {
+            int temp = array[i];
+            array[i] = array[min_index];
+            array[min_index] = temp;
+            /* Print array after each swap */
+            for (j = 0; j < size - 1; j++) {
+                printf("%d, ", array[j]);
+            }
+            printf("%d\n", array[size - 1]);
+        }
     }
 }
-
