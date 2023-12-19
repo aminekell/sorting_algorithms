@@ -19,21 +19,22 @@ void insertion_sort_list(listint_t **list) {
         }
 
         if (temp == NULL) {
+            current->prev = NULL;
             current->next = sorted;
             if (sorted != NULL)
                 sorted->prev = current;
             sorted = current;
         } else {
-            temp->next = current;
             current->prev = temp;
-            current->next = temp_sorted;
-            if (temp_sorted != NULL)
-                temp_sorted->prev = current;
+            current->next = temp->next;
+            if (temp->next != NULL)
+                temp->next->prev = current;
+            temp->next = current;
         }
 
+        *list = sorted; 
+        print_list(*list);
         current = next;
     }
-
-    *list = sorted;
 }
 
